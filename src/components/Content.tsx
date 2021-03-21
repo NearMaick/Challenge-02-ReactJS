@@ -3,6 +3,7 @@ import { MovieCard } from './MovieCard';
 
 import { api } from '../services/api';
 
+import '../styles/content.scss';
 interface GenreResponseProps {
   id: number;
   name: 'action' | 'comedy' | 'documentary' | 'drama' | 'horror' | 'family';
@@ -23,18 +24,11 @@ interface MovieProps {
 export function Content({ genreId }: any) {
   const [selectedGenreId, setSelectedGenreId] = useState(1);
   const [selectedGenre, setSelectedGenre] = useState<GenreResponseProps>({} as GenreResponseProps);
-  const [genres, setGenres] = useState<GenreResponseProps[]>([]);
   const [movies, setMovies] = useState<MovieProps[]>([]);
 
   useEffect(() => {
     setSelectedGenreId(genreId)
-  }, [genreId])
-
-  useEffect(() => {
-    api.get<GenreResponseProps[]>('genres').then(response => {
-      setGenres(response.data);
-    });
-  }, []);
+  }, [genreId]) 
 
   useEffect(() => {
     api.get<MovieProps[]>(`movies/?Genre_id=${selectedGenreId}`).then(response => {
