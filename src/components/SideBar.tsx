@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { Button } from './Button';
 import { Content } from './Content';
 
@@ -12,7 +12,7 @@ export interface GenreResponseProps {
   title: string;
 }
 
-export function SideBar({ children }: any) {
+function SideBarComponent() {
   const [genres, setGenres] = useState<GenreResponseProps[]>([]);
   const [selectedGenreId, setSelectedGenreId] = useState(1);
 
@@ -48,3 +48,7 @@ export function SideBar({ children }: any) {
       </>
   )
 }
+
+export const SideBar = memo(SideBarComponent, (prevProps, nextProps) => {
+  return Object.is(prevProps, nextProps)
+})
